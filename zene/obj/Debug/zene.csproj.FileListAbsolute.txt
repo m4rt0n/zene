@@ -4,3 +4,4 @@ C:\Users\Marton\source\repos\zene\zene\bin\Debug\zene.pdb
 C:\Users\Marton\source\repos\zene\zene\obj\Debug\zene.csproj.CoreCompileInputs.cache
 C:\Users\Marton\source\repos\zene\zene\obj\Debug\zene.exe
 C:\Users\Marton\source\repos\zene\zene\obj\Debug\zene.pdb
+C:\Users\Marton\source\repos\zene\zene\obj\Debug\zene.csprojAssemblyReference.cache

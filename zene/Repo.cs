@@ -27,28 +27,38 @@ namespace zene
 
             //read by lines
             string[] lines = System.IO.File.ReadAllLines(readText);
-           
+            lines = lines.Skip(1).ToArray();
             //System.Console.WriteLine(readText);
 
-            
+
             //var trackList = new List<Track>();
-
-            foreach (string line in lines)
+            try
             {
-                
-                string[] trackData = new string[4];
-                char[] sep = { ' ' };
-                trackData = line.Split(sep, 4);
-                int Rad = Convert.ToInt32(trackData[0]);
-                int Min = Convert.ToInt32(trackData[1]);
-                int Sec = Convert.ToInt32(trackData[2]);
-                string Name = trackData[3];
-                
-                Track t = new Track(Rad, Min, Sec, Name);
-                TrackList.Add(t);
-                //AddTrack(Rad, Min, Sec, Name);
-            }
+                foreach (string line in lines)
+                {
 
+                    string[] trackData = new string[4];
+                    char[] sep = { ' ' };
+                    trackData = line.Split(sep, 4);
+                    int Rad = Convert.ToInt32(trackData[0]);
+                    //Console.WriteLine("1st: " + trackData[0]);
+                    int Min = Convert.ToInt32(trackData[1]);
+                    //Console.WriteLine("2nd: " + trackData[1]);
+                    int Sec = Convert.ToInt32(trackData[2]);
+                    //Console.WriteLine("3rd: " + trackData[2]);
+                    string Name = trackData[3];
+                    //Console.WriteLine("4th: " + trackData[3]);
+
+                    Track t = new Track(Rad, Min, Sec, Name);
+                    TrackList.Add(t);
+                    //AddTrack(Rad, Min, Sec, Name);
+                    //Console.WriteLine("first " + trackData[0]);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("error");
+            }
         }
 
        
