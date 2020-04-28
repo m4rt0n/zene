@@ -8,14 +8,67 @@ namespace zene
 {
     public class Track
     {
-        public int Rad { get; set; }
-        public int Min { get; set; }
-        public int Sec { get; set; }
-        public string Name { get; set; }
+        private int _rad;
+        private int _sec;
+        private int _min;
+        private string _name;
 
-    public Track(int radio, int min,int sec, string name)
+        public int Rad
         {
-           
+            get
+            {
+                return this._rad;
+            }
+            set
+            {
+                this._rad = value;
+            }
+        }
+
+        public int Sec
+        {
+            get
+            {
+                return this._sec;
+            }
+            set
+            {
+                this._sec = value;
+            }
+        }
+
+        public int Min
+        {
+            get
+            {
+                return this._min;
+            }
+            set
+            {
+                this._min = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this._name;
+            }
+            set
+            {
+                this._name = value;
+            }
+        }
+
+        public Track(int rad, int min,int sec, string name)
+        {
+            this._rad = rad;
+            this._min = min;
+            this._sec = sec;
+            this._name = name;
+
+
 
             /*           
             TimeSpan time = TimeSpan.FromSeconds(seconds);

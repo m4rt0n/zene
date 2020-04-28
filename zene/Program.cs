@@ -19,9 +19,9 @@ namespace zene
             repo.ReadList("musor.txt");
 
             
-                Console.WriteLine("\n Tracks from list: \n" + "Radio - Name - Min - Sec \n");
+                Console.WriteLine("\n Tracks from list: \n" + "Radio - Min - Sec - Name \n");
                 repo.TrackList.ForEach(track => {
-                    Console.WriteLine(track.Rad + " - " + track.Name + " - " + track.Min + " - " + track.Sec);
+                    Console.WriteLine(track.Rad + " - " + track.Min + " - " + track.Sec + " - " + track.Name);
                 });
             
 
