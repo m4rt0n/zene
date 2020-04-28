@@ -70,10 +70,7 @@ namespace zene
 
 
 
-            /*           
-            TimeSpan time = TimeSpan.FromSeconds(seconds);
-            string str = time .ToString(@"hh\:mm\:ss\:fff");
-            */
+            
         }
 
 

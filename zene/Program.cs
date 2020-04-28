@@ -15,22 +15,21 @@ namespace zene
         static void Main(string[] args)
         {
             Repo repo = new Repo();
-
+            //1.
             repo.ReadList("musor.txt");
+            //2.
+            repo.GroupByRadio();
+            //3
+            repo.ClaptonTime();
 
             
-                Console.WriteLine("\n Tracks from list: \n" + "Radio - Min - Sec - Name \n");
-                repo.TrackList.ForEach(track => {
-                    Console.WriteLine(track.Rad + " - " + track.Min + " - " + track.Sec + " - " + track.Name);
-                });
-            
-
-
-
         }
     }
 }
 
 /*
-
+Console.WriteLine("\n Tracks from list: \n" + "Radio - Min - Sec - Name \n");
+                repo.TrackList.ForEach(track => {
+                    Console.WriteLine(track.Rad + " - " + track.Min + " - " + track.Sec + " - " + track.Name);
+                });
 */

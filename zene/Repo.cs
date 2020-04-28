@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace zene
 {
@@ -12,27 +13,13 @@ namespace zene
     {
         public List<Track> TrackList { get; set; }
 
+        
 
-        /*
-        public void AddTrack(int rad, int min, int sec, string name)
-        {
-            this.TrackList.Add(new Track(rad, min, sec, name));
-        }
-        */
+        //1
         public void ReadList(string readText)
         {
-            
-            //read text as one string
-            //string text = System.IO.File.ReadAllText(readText);
-            //System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
-
-            //read by lines
             string[] lines = System.IO.File.ReadAllLines(readText);
             lines = lines.Skip(1).ToArray();
-            //System.Console.WriteLine(readText);
-
-
-            //var trackList = new List<Track>();
             TrackList = new List<Track>();
 
             try
@@ -44,18 +31,11 @@ namespace zene
                     char[] sep = { ' ' };
                     trackData = line.Split(sep, 4);
                     int Rad = Convert.ToInt32(trackData[0]);
-                    //Console.WriteLine("1st: " + trackData[0]);
                     int Min = Convert.ToInt32(trackData[1]);
-                    //Console.WriteLine("2nd: " + trackData[1]);
                     int Sec = Convert.ToInt32(trackData[2]);
-                    //Console.WriteLine("3rd: " + trackData[2]);
                     string Name = trackData[3];
-                    //Console.WriteLine("4th: " + trackData[3]);
-
                     Track t = new Track(Rad, Min, Sec, Name);
-                    TrackList.Add(t);
-                    //AddTrack(Rad, Min, Sec, Name);
-                    //Console.WriteLine("first " + trackData[0]);
+                    TrackList.Add(t);                    
                 }
             }
             catch (Exception e)
@@ -63,12 +43,67 @@ namespace zene
                 Console.WriteLine("{0} error:", e);
             }
         }
+        //2.
+        public void GroupByRadio()
+        {
+            for (int i = 1; i < 4; i++)
+            { 
+            Console.WriteLine("{0} Radio : {1} tracks", i,
+                TrackList.Where(x => x.Rad == i).Count());
+            }
+        }
+        //3
+        public void ClaptonTime()
+        {
+            List<Track> firstList = TrackList.FindAll(x => x.Rad == 1);
+            
+        var firstClapton = firstList.Find
+                (x => x.Name.Contains("Eric Clapton")); 
+            
+        var lastClapton= firstList.FindLast(x =>  x.Name.Contains("Eric Clapton"));
 
-       
+            Console.WriteLine("first C: {0} \n last C: {1}", firstClapton.Name, lastClapton.Name);
 
+
+            //Console.WriteLine("Time between first & last Clapton Clapton tracks: {0}", );
+            
+        }
+
+        public void TimeConvert(Track t)
+        {           
+                var seconds = t.Min * 60 + t.Sec;
+                TimeSpan time = TimeSpan.FromSeconds(seconds);
+                string str = time.ToString(@"hh\:mm\:ss\:fff");
+                Console.WriteLine("duration of {0} : {1}", t.Name, str);                       
+        }
+
+        public void groupByRadioToList()
+        {
+            
+             radioGroup[0] = TrackList.FindAll(x => x.Rad == 1).ToArray();
+            List<Track> secondList = TrackList.FindAll(x => x.Rad == 2);
+            List<Track> thirdList = TrackList.FindAll(x => x.Rad == 3);           
+        }
+
+        public void timePassed()
+        {
+            
+            for (int i = 0; i < 3; i++)
+            {
+                int time = 0;
+                foreach (Track t in radioGroup[i])
+                {
+                    t.Begin = time;
+                    time += TimeConvert(t);
+                }
+            }
+        }
     }
 }
 
-/*
+
+ /*           
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            string str = time .ToString(@"hh\:mm\:ss\:fff");
+            */
  
- */
