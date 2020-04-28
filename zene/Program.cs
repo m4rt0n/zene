@@ -14,10 +14,15 @@ namespace zene
 
         static void Main(string[] args)
         {
-            Reader read = new Reader();
-            read.ReadList("musor.txt");
+            Repo repo = new Repo();
 
-
+            repo.ReadList("musor.txt");
+        
+            Console.WriteLine("\n Tracks from list: \n" + "Radio - Name - Time \n");
+            repo.TrackList.ForEach(track => {
+                Console.WriteLine(track.Rad + " - " + track.Name + " - " + track.Min + " - " + track.Sec);
+            });
+        
 
 
 
