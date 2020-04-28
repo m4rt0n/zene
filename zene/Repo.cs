@@ -7,11 +7,12 @@ using System.IO;
 
 namespace zene
 {
+   
     public class Repo
     {
+        public List<Track> TrackList { get; set; }
 
 
-        public  List<Track> TrackList { get; set; }
         /*
         public void AddTrack(int rad, int min, int sec, string name)
         {
@@ -32,6 +33,8 @@ namespace zene
 
 
             //var trackList = new List<Track>();
+            TrackList = new List<Track>();
+
             try
             {
                 foreach (string line in lines)
@@ -55,9 +58,9 @@ namespace zene
                     //Console.WriteLine("first " + trackData[0]);
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("error");
+                Console.WriteLine("{0} error:", e);
             }
         }
 
