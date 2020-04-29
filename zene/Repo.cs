@@ -76,14 +76,7 @@ namespace zene
             Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));                      
         }
         
-        public string TimeConvert(int seconds)
-        {           
-                //var second = t.Min * 60 + t.Sec;
-                TimeSpan time = TimeSpan.FromSeconds(seconds);
-                string str = time.ToString(@"hh\:mm\:ss");
-            return str;
-                //Console.WriteLine("converted time : {1}", str);                       
-        }
+        
 
         //4
         public void Omega()
@@ -113,7 +106,9 @@ namespace zene
             */
             var omegaTime = TimeConvert(TimePassed(omegaListRange));
             Console.WriteLine("Omega track start: {0}", omegaTime);
-            
+            //???
+            var listOneOmegaTime = listRadioOne.Find
+                (t=>t.);
         }
 
         public int TimePassed(List<Track> list)
@@ -128,7 +123,14 @@ namespace zene
                 return listTime;           
         }
 
-
+        public string TimeConvert(int seconds)
+        {
+            //var second = t.Min * 60 + t.Sec;
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            string str = time.ToString(@"hh\:mm\:ss");
+            return str;
+            //Console.WriteLine("converted time : {1}", str);                       
+        }
 
 
 
