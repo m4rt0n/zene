@@ -52,6 +52,7 @@ namespace zene
                 TrackList.Where(x => x.Rad == i).Count());
             }
         }
+
         //3
         public void ClaptonTime()
         {   //radio 1
@@ -67,24 +68,26 @@ namespace zene
                 (i => i.Name == lastClapton.Name);
             // tracks between first and last EC
             var range = firstList.GetRange(firstClaptonIndex, lastClaptonIndex-firstClaptonIndex);
+            var time = 0;
             foreach (Track t in range)
             {
-                Console.WriteLine(t.Name);
+                //time in sec
+                time += t.Min * 60 + t.Sec; 
             }
-
-            Console.WriteLine("first C: {0} \n last C: {1}", firstClapton.Name, lastClapton.Name);
-
+            //convert time sec
+            Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));
             
-            //Console.WriteLine("Time between first & last Clapton Clapton tracks: {0}", );
-            
+
+           
         }
-
-        public void TimeConvert(Track t)
+        
+        public string TimeConvert(int seconds)
         {           
-                var seconds = t.Min * 60 + t.Sec;
+                //var second = t.Min * 60 + t.Sec;
                 TimeSpan time = TimeSpan.FromSeconds(seconds);
                 string str = time.ToString(@"hh\:mm\:ss\:fff");
-                Console.WriteLine("duration of {0} : {1}", t.Name, str);                       
+            return str;
+                //Console.WriteLine("converted time : {1}", str);                       
         }
 
         public void groupByRadioToList()
