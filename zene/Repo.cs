@@ -12,9 +12,7 @@ namespace zene
     public class Repo
     {
         public List<Track> TrackList { get; set; }
-
-        
-
+       
         //1
         public void ReadList(string readText)
         {
@@ -56,18 +54,18 @@ namespace zene
         //3
         public void ClaptonTime()
         {   //radio 1
-            List<Track> firstList = TrackList.FindAll(x => x.Rad == 1);
+            List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
            //first and last EC
-        var firstClapton = firstList.Find
+        var firstClapton = listRadioOne.Find
                 (x => x.Name.Contains("Eric Clapton"));             
-        var lastClapton= firstList.FindLast(x =>  x.Name.Contains("Eric Clapton"));
+        var lastClapton= listRadioOne.FindLast(x =>  x.Name.Contains("Eric Clapton"));
             //index first and last EC
-            var firstClaptonIndex = firstList.FindIndex
+            var firstClaptonIndex = listRadioOne.FindIndex
                 (i=>i.Name==firstClapton.Name);
-            var lastClaptonIndex = firstList.FindIndex
+            var lastClaptonIndex = listRadioOne.FindIndex
                 (i => i.Name == lastClapton.Name);
             // tracks between first and last EC
-            var range = firstList.GetRange(firstClaptonIndex, lastClaptonIndex-firstClaptonIndex);
+            var range = listRadioOne.GetRange(firstClaptonIndex, lastClaptonIndex-firstClaptonIndex);
             var time = 0;
             foreach (Track t in range)
             {
@@ -75,10 +73,7 @@ namespace zene
                 time += t.Min * 60 + t.Sec; 
             }
             //convert time sec
-            Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));
-            
-
-           
+            Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));                      
         }
         
         public string TimeConvert(int seconds)
@@ -89,6 +84,56 @@ namespace zene
             return str;
                 //Console.WriteLine("converted time : {1}", str);                       
         }
+
+        //4
+        public void Omega()
+        {
+            //omega name
+            string omegaName = "Omega:Legenda";       
+            //find omega object
+            var omegaObj = TrackList.Find(o => o.Name == omegaName);
+            //find radio of omega 
+            var omegaRadio = TrackList.Contains(omegaObj);                            
+            //radio played
+            Console.WriteLine("Radio number: {0}",omegaRadio.Rad);
+            //list by radio
+            List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
+            List<Track> listRadioTwo = TrackList.FindAll(x => x.Rad == 2);
+            List<Track> listRadioThree = TrackList.FindAll(x => x.Rad == 3);
+            //index omega track
+            var omegaIndex=listRadioOne.IndexOf
+                (i => i.Name == omegaName);
+            Console.WriteLine(omegaIndex);
+            /*
+            var omegaListRange = listRadioOne.GetRange(0, omegaIndex);
+            foreach (Track t in omegaListRange)
+            {
+                Console.WriteLine("list before omega track: \n{0}", t.Name);
+            }
+            //Console.WriteLine("Omega track start: {0}", timePassed(omegaListRange));
+            */
+        }
+
+        public int timePassed(List<Track> list)
+        {          
+                int trackTime = 0;
+                int listTime = 0;
+                foreach (Track t in list)
+                {
+                    trackTime = t.Min * 60 + t.Sec;
+                    listTime += trackTime;                    
+                }
+                return listTime;           
+        }
+
+
+
+
+
+
+
+
+
 
         public void groupByRadioToList()
         {

@@ -21,7 +21,11 @@ namespace zene
             repo.GroupByRadio();
             //3
             repo.ClaptonTime();
-
+            //4
+            repo.Omega();
+            //5
+            
+            //6
             
         }
     }
