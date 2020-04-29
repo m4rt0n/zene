@@ -54,17 +54,27 @@ namespace zene
         }
         //3
         public void ClaptonTime()
-        {
+        {   //radio 1
             List<Track> firstList = TrackList.FindAll(x => x.Rad == 1);
-            
+           //first and last EC
         var firstClapton = firstList.Find
-                (x => x.Name.Contains("Eric Clapton")); 
-            
+                (x => x.Name.Contains("Eric Clapton"));             
         var lastClapton= firstList.FindLast(x =>  x.Name.Contains("Eric Clapton"));
+            //index first and last EC
+            var firstClaptonIndex = firstList.FindIndex
+                (i=>i.Name==firstClapton.Name);
+            var lastClaptonIndex = firstList.FindIndex
+                (i => i.Name == lastClapton.Name);
+            // tracks between first and last EC
+            var range = firstList.GetRange(firstClaptonIndex, lastClaptonIndex-firstClaptonIndex);
+            foreach (Track t in range)
+            {
+                Console.WriteLine(t.Name);
+            }
 
             Console.WriteLine("first C: {0} \n last C: {1}", firstClapton.Name, lastClapton.Name);
 
-
+            
             //Console.WriteLine("Time between first & last Clapton Clapton tracks: {0}", );
             
         }
@@ -79,12 +89,13 @@ namespace zene
 
         public void groupByRadioToList()
         {
-            
-             radioGroup[0] = TrackList.FindAll(x => x.Rad == 1).ToArray();
+
+            List<Track> firstList = TrackList.FindAll(x => x.Rad == 1);
             List<Track> secondList = TrackList.FindAll(x => x.Rad == 2);
             List<Track> thirdList = TrackList.FindAll(x => x.Rad == 3);           
         }
 
+        /*
         public void timePassed()
         {
             
@@ -98,6 +109,7 @@ namespace zene
                 }
             }
         }
+        */
     }
 }
 
