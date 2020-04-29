@@ -93,17 +93,17 @@ namespace zene
             //find omega object
             var omegaObj = TrackList.Find(o => o.Name == omegaName);
             //find radio of omega 
-            var omegaRadio = TrackList.Contains(omegaObj);                            
+            var omegaRadio = TrackList.Contains(omegaObj);            
             //radio played
-            Console.WriteLine("Radio number: {0}",omegaRadio.Rad);
+            Console.WriteLine("Radio number: {0}",omegaObj.Rad);
             //list by radio
             List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
             List<Track> listRadioTwo = TrackList.FindAll(x => x.Rad == 2);
             List<Track> listRadioThree = TrackList.FindAll(x => x.Rad == 3);
             //index omega track
-            var omegaIndex=listRadioOne.IndexOf
-                (i => i.Name == omegaName);
-            Console.WriteLine(omegaIndex);
+            var omegaIndex=listRadioOne.IndexOf(omegaObj);
+            Console.WriteLine("index of: {0} : {1}",omegaName, omegaIndex);
+            
             /*
             var omegaListRange = listRadioOne.GetRange(0, omegaIndex);
             foreach (Track t in omegaListRange)
