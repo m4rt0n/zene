@@ -97,18 +97,36 @@ namespace zene
             var omegaIndex=listRadioThree.IndexOf(omegaObj);
             Console.WriteLine("index of: {0} : {1}",omegaName, omegaIndex);
             //tracks before omega            
-            var omegaListRange = listRadioOne.GetRange(0, omegaIndex);
+            var omegaListRange = listRadioThree.GetRange(0, omegaIndex);
             /*
             foreach (Track t in omegaListRange)
             {
                 Console.WriteLine(t.Name);          
             }
             */
-            var omegaTime = TimeConvert(TimePassed(omegaListRange));
-            Console.WriteLine("Omega track start: {0}", omegaTime);
-            //???
-            var listOneOmegaTime = listRadioOne.Find
-                (t=>t.);
+            int omegaTime = (TimePassed(omegaListRange));
+            string omegaTimeString = TimeConvert(omegaTime);
+            Console.WriteLine("Omega track start: {0}", omegaTimeString);
+            //track during omega
+            Track tmp;
+            int trackTime=0;
+            int listTime=0;
+            foreach(Track t in listRadioOne)
+            {
+                trackTime = t.Min * 60 + t.Sec;
+                listTime += trackTime;
+                if(listTime>omegaTime)
+                {
+                    tmp = t;
+
+                    // last or previous object needed from these:
+                    Console.WriteLine
+                        ("Radio 1 track during omega: {0}",tmp.Name);
+                }
+            }
+            
+
+            
         }
 
         public int TimePassed(List<Track> list)
