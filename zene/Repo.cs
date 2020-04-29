@@ -80,7 +80,7 @@ namespace zene
         {           
                 //var second = t.Min * 60 + t.Sec;
                 TimeSpan time = TimeSpan.FromSeconds(seconds);
-                string str = time.ToString(@"hh\:mm\:ss\:fff");
+                string str = time.ToString(@"hh\:mm\:ss");
             return str;
                 //Console.WriteLine("converted time : {1}", str);                       
         }
@@ -99,22 +99,23 @@ namespace zene
             //list by radio
             List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
             List<Track> listRadioTwo = TrackList.FindAll(x => x.Rad == 2);
-            List<Track> listRadioThree = TrackList.FindAll(x => x.Rad == 3);
+            List<Track> listRadioThree = TrackList.FindAll(x => x.Rad == 3);    
             //index omega track
-            var omegaIndex=listRadioOne.IndexOf(omegaObj);
+            var omegaIndex=listRadioThree.IndexOf(omegaObj);
             Console.WriteLine("index of: {0} : {1}",omegaName, omegaIndex);
-            
+            //tracks before omega            
+            var omegaListRange = listRadioOne.GetRange(0, omegaIndex); 
             /*
-            var omegaListRange = listRadioOne.GetRange(0, omegaIndex);
             foreach (Track t in omegaListRange)
             {
-                Console.WriteLine("list before omega track: \n{0}", t.Name);
+                Console.WriteLine(t.Name);          
             }
-            //Console.WriteLine("Omega track start: {0}", timePassed(omegaListRange));
             */
+            Console.WriteLine("Omega track start: {0}", TimeConvert(TimePassed(omegaListRange)));
+            
         }
 
-        public int timePassed(List<Track> list)
+        public int TimePassed(List<Track> list)
         {          
                 int trackTime = 0;
                 int listTime = 0;
