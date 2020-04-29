@@ -104,14 +104,15 @@ namespace zene
             var omegaIndex=listRadioThree.IndexOf(omegaObj);
             Console.WriteLine("index of: {0} : {1}",omegaName, omegaIndex);
             //tracks before omega            
-            var omegaListRange = listRadioOne.GetRange(0, omegaIndex); 
+            var omegaListRange = listRadioOne.GetRange(0, omegaIndex);
             /*
             foreach (Track t in omegaListRange)
             {
                 Console.WriteLine(t.Name);          
             }
             */
-            Console.WriteLine("Omega track start: {0}", TimeConvert(TimePassed(omegaListRange)));
+            var omegaTime = TimeConvert(TimePassed(omegaListRange));
+            Console.WriteLine("Omega track start: {0}", omegaTime);
             
         }
 
