@@ -53,12 +53,14 @@ namespace zene
 
         //3
         public void ClaptonTime()
-        {   //radio 1
+        {
+            string ec = "Eric Clapton";
+            //radio 1
             List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
            //first and last EC
         var firstClapton = listRadioOne.Find
-                (x => x.Name.Contains("Eric Clapton"));             
-        var lastClapton= listRadioOne.FindLast(x =>  x.Name.Contains("Eric Clapton"));
+                (x => x.Name.Contains(ec));             
+        var lastClapton= listRadioOne.FindLast(x =>  x.Name.Contains(ec));
             //index first and last EC
             var firstClaptonIndex = listRadioOne.FindIndex
                 (i=>i.Name==firstClapton.Name);
@@ -75,9 +77,7 @@ namespace zene
             //convert time sec
             Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));                      
         }
-        
-        
-
+               
         //4
         public void Omega()
         {
@@ -88,7 +88,7 @@ namespace zene
             //find radio of omega 
             var omegaRadio = TrackList.Contains(omegaObj);            
             //radio played
-            Console.WriteLine("Radio number: {0}",omegaObj.Rad);
+            Console.WriteLine("omega radio number: {0}",omegaObj.Rad);
             //list by radio
             List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
             List<Track> listRadioTwo = TrackList.FindAll(x => x.Rad == 2);
@@ -111,6 +111,8 @@ namespace zene
             Track tmp;
             int trackTime=0;
             int listTime=0;
+            List<Track> tempList=new List<Track>();  
+            //radio 1
             foreach(Track t in listRadioOne)
             {
                 trackTime = t.Min * 60 + t.Sec;
@@ -118,17 +120,86 @@ namespace zene
                 if(listTime>omegaTime)
                 {
                     tmp = t;
+                    tempList.Add(tmp);         
+                }
+            }
+            //radio 2
+            foreach (Track t in listRadioTwo)
+            {
+                trackTime = t.Min * 60 + t.Sec;
+                listTime += trackTime;
+                if (listTime > omegaTime)
+                {
+                    tmp = t;
+                    tempList.Add(tmp);
+                }
+            }
+            Console.WriteLine
+                       ("Radio 1 track: {0}\nRadio 2 track: {1} ",
+                       (tempList.FindLast(x => x.Rad == 1).Name),
+                       (tempList.FindLast(x => x.Rad == 2).Name));
+        }
 
-                    // last or previous object needed from these:
-                    Console.WriteLine
-                        ("Radio 1 track during omega: {0}",tmp.Name);
+        //5
+        public void SearchSms()
+        {
+            //consol input
+            string sms;
+            Console.Write("Enter text: ");
+            sms = Console.ReadLine();
+            //Console.WriteLine(sms);
+            //search in list
+            List<Track> searchList = TrackList.FindAll(s => s.Name.Contains(sms.ToLower()));
+            //write to txt
+            string textFile = "keres.txt";
+
+            //???
+
+
+            //System.IO.File.WriteAllLines(textFile, array?);
+
+            
+            using (StreamWriter sw = File.CreateText(textFile))
+            {                               
+                sw.WriteLine(sms);
+                /*
+                foreach (Track t in searchList)
+                {
+                    sw.WriteLine(t.Name);
+                    
+                }
+                */
+            }
+        
+            /*
+            using (StreamWriter sw = new StreamWriter(textFile))
+            {
+                foreach (Track t in searchList)
+                {
+                    sw.WriteLine(t.Name);
+
+                }
+            }
+            */
+
+            //test text                 
+            using (StreamReader sr = File.OpenText(textFile))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(s);
                 }
             }
             
-
+            
             
         }
 
+
+
+
+        // helper methods
         public int TimePassed(List<Track> list)
         {          
                 int trackTime = 0;
@@ -157,28 +228,10 @@ namespace zene
 
 
 
-        public void groupByRadioToList()
-        {
-
-            List<Track> firstList = TrackList.FindAll(x => x.Rad == 1);
-            List<Track> secondList = TrackList.FindAll(x => x.Rad == 2);
-            List<Track> thirdList = TrackList.FindAll(x => x.Rad == 3);           
-        }
+        
 
         /*
-        public void timePassed()
-        {
-            
-            for (int i = 0; i < 3; i++)
-            {
-                int time = 0;
-                foreach (Track t in radioGroup[i])
-                {
-                    t.Begin = time;
-                    time += TimeConvert(t);
-                }
-            }
-        }
+        
         */
     }
 }
