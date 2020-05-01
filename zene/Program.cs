@@ -26,7 +26,7 @@ namespace zene
             //5
             repo.SearchSms();
             //6
-
+            repo.Change();
         }
     }
 }

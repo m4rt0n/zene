@@ -185,13 +185,35 @@ namespace zene
                     Console.WriteLine(s);
                 }
             }
-            */
+            */            
+        }
+
+        //6
+        public void Change()
+        {
+            List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
+
+            //57min=4320
+            //2min=180
+            int newTime = 180;
+            int breakList = 3420;
+
+            foreach (Track t in listRadioOne)
+            {
+                if (breakList < (t.Min * 60 + t.Sec + 60))
+                {
+                    newTime += breakList + 180;
+                    breakList = 3420;
+                }
+                newTime += t.Min * 60 + t.Sec + 60;
+                breakList -= t.Min * 60 + t.Sec + 60;
+
+            }
+            string newList = TimeConvert(newTime);
+            Console.WriteLine("New times of Radio1: {0}", newList);
 
 
         }
-
-
-
 
         // helper methods
         public int TimePassed(List<Track> list)
@@ -213,26 +235,9 @@ namespace zene
             string str = time.ToString(@"hh\:mm\:ss");
             return str;
             //Console.WriteLine("converted time : {1}", str);                       
-        }
-
-
-
-
-
-
-
-
-        
-
-        /*
-        
-        */
+        }            
     }
 }
 
 
- /*           
-            TimeSpan time = TimeSpan.FromSeconds(seconds);
-            string str = time .ToString(@"hh\:mm\:ss\:fff");
-            */
  
