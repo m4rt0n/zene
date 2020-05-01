@@ -149,40 +149,34 @@ namespace zene
             sms = Console.ReadLine();
             //Console.WriteLine(sms);
             //search in list
-            List<Track> searchList = TrackList.FindAll(s => s.Name.Contains(sms.ToLower()));
+            List<Track> searchList = TrackList.FindAll(s => s.Name.ToLower().Contains(sms));
             //write to txt
             string textFile = "keres.txt";
 
-            //???
+            //???---------------------           
 
-
-            //System.IO.File.WriteAllLines(textFile, array?);
-
-            
-            using (StreamWriter sw = File.CreateText(textFile))
-            {                               
-                sw.WriteLine(sms);
-                /*
-                foreach (Track t in searchList)
-                {
-                    sw.WriteLine(t.Name);
-                    
-                }
-                */
-            }
-        
-            /*
-            using (StreamWriter sw = new StreamWriter(textFile))
+            if (!File.Exists(textFile))
             {
-                foreach (Track t in searchList)
-                {
-                    sw.WriteLine(t.Name);
-
-                }
+                // Create a file to write to.
+                string createText = sms + Environment.NewLine;
+                File.WriteAllText(textFile, createText);                       
             }
-            */
+                                         
+                if (searchList.Count() != 0)
+                {
+                    foreach (Track t in searchList)
+                    {
+                        string appendText = t.Name + Environment.NewLine;
+                        File.AppendAllText(textFile, appendText);
+                    }
+                }                
+                else
+                {
+                    Console.WriteLine("no match for: {0}", sms);
+                }                                                  
 
-            //test text                 
+            //test text
+            /*
             using (StreamReader sr = File.OpenText(textFile))
             {
                 string s = "";
@@ -191,9 +185,9 @@ namespace zene
                     Console.WriteLine(s);
                 }
             }
-            
-            
-            
+            */
+
+
         }
 
 
