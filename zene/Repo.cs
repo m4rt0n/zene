@@ -8,19 +8,16 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
 namespace zene
-{
-   
+{  
     public class Repo
     {
-        public List<Track> TrackList { get; set; }
-       
+        public List<Track> TrackList { get; set; }      
         //1
         public void ReadList(string readText)
         {
             string[] lines = System.IO.File.ReadAllLines(readText);
             lines = lines.Skip(1).ToArray();
             TrackList = new List<Track>();
-
             try
             {
                 foreach (string line in lines)
@@ -41,17 +38,17 @@ namespace zene
             {
                 Console.WriteLine("{0} error:", e);
             }
+            Console.WriteLine("Sikeres beolvasas: '{0}'", readText);
         }
         //2.
         public void GroupByRadio()
         {
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i < 3; i++)
             { 
-            Console.WriteLine("{0} Radio : {1} tracks", i,
+            Console.WriteLine("{0}. Ado : {1} szam", i,
                 TrackList.Where(x => x.Rad == i).Count());
             }
         }
-
         //3
         public void ClaptonTime(string ec)
         {
@@ -77,7 +74,7 @@ namespace zene
             }
             time += lastClapton.Min * 60 + lastClapton.Sec;
             //convert time sec
-            Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));                      
+            Console.WriteLine("Elso es utolso Clapton szam kozti ido 1. Adon:\n{0}",TimeConvert(time));                      
         }
                
         //4
@@ -90,14 +87,14 @@ namespace zene
             //find radio of omega 
             var omegaRadio = TrackList.Contains(omegaObj);            
             //radio played
-            Console.WriteLine("omega radio number: {0}",omegaObj.Rad);
+            Console.WriteLine("A(z) '{0}' szam a(z) {1}. adon volt hallhato",omegaName,omegaObj.Rad);
             //list by radio
             List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
             List<Track> listRadioTwo = TrackList.FindAll(x => x.Rad == 2);
             List<Track> listRadioThree = TrackList.FindAll(x => x.Rad == 3);    
             //index omega track
             var omegaIndex=listRadioThree.IndexOf(omegaObj);
-            Console.WriteLine("index of: {0} : {1}",omegaName, omegaIndex);
+            //Console.WriteLine("index of: {0} : {1}",omegaName, omegaIndex);
             //tracks before omega            
             var omegaListRange = listRadioThree.GetRange(0, omegaIndex);
             /*
@@ -108,49 +105,58 @@ namespace zene
             */
             int omegaTime = (TimePassed(omegaListRange));
             string omegaTimeString = TimeConvert(omegaTime);
-            Console.WriteLine("Omega track start: {0}", omegaTimeString);
+            //Console.WriteLine("Omega track start: {0}", omegaTimeString);
 
             //track during omega
 
             Track elementOne=ListTime(listRadioOne, omegaTime);
             Track elementTwo=ListTime(listRadioTwo, omegaTime);
 
+            /*
+            if (checkBox1.Checked)
+                MessageBox.Show("A");
+            else
+                MessageBox.Show("B");
+
+            MessageBox.Show(checkBox1.Checked ? "A" : "B");
+            */
+            Console.WriteLine(elementOne != null ?
+                "1. adon hallhato szam: " + elementOne.Name :
+                "1. adon nincs talalat");
+            Console.WriteLine(elementTwo != null ?
+                "2. adon hallhato szam: " + elementTwo.Name :
+                "2. adon nincs talalat");
+            /*
             if (elementOne != null)
                 {
-                Console.WriteLine("Radio 1 track during omega: {0}", elementOne.Name);
+                Console.WriteLine("1. adon hallhato szam: {0}", elementOne.Name);
                 }
             else
                 {
-                Console.WriteLine("Radio 1 : no match");
+                Console.WriteLine("1. adon nincs talalat");
                 }
 
             if (elementTwo != null)
             {
-                Console.WriteLine("Radio 1 track during omega: {0}", elementTwo.Name);
+                Console.WriteLine("2. adon hallhato szam: {0}", elementTwo.Name);
             }
             else
             {
-                Console.WriteLine("Radio 2 : no match");
-            }
-
-
-
-
-            //Console.WriteLine("Tracks during omega: \br Radio1 : {0}\br Radio2: : {1}",
-            //elementOne.Name, elementTwo.Name );
-
+                Console.WriteLine("2. adon nincs talalat");
+            }  
+            */
         }
         //----------------------------------------
         //5
-        public void SearchSms()
+        public void SearchSms(string smsInput)
         {
             //consol input
-            string sms;
-            Console.Write("Enter text: ");
-            sms = Console.ReadLine();
+            //string sms;
+            
+            
             //Console.WriteLine(sms);
             //search in list
-            List<Track> searchList = TrackList.FindAll(s => s.Name.ToLower().Contains(sms));
+            List<Track> searchList = TrackList.FindAll(s => s.Name.ToLower().Contains(smsInput));
             //write to txt
             string textFile = "keres.txt";                    
 
@@ -158,28 +164,15 @@ namespace zene
             if (!File.Exists(textFile))
             {
                 // Create a file to write to.
-                string createText = sms + Environment.NewLine;
+                string createText = smsInput + Environment.NewLine;
                 File.WriteAllText(textFile, createText);                       
             }
-            /*                           
-              if (searchList.Count() != 0)
-              {
-                  foreach (Track t in searchList)
-                  {
-                      string appendText = t.Name + Environment.NewLine;
-                      File.AppendAllText(textFile, appendText);
-                  }
-              }                
-              else
-              {
-                  Console.WriteLine("no match for: {0}", sms);
-              }
-              */
+            
 
             string minta = ".*";
-            for (int i = 0; i < sms.Length; i++)
+            for (int i = 0; i < smsInput.Length; i++)
             {
-                minta = minta + Convert.ToString(sms[i]).ToLower() + ".*";
+                minta = minta + Convert.ToString(smsInput[i]).ToLower() + ".*";
             }
             Regex mint = new Regex(minta);
 
@@ -195,27 +188,19 @@ namespace zene
                 }
             
 
-            /*
-            string pattern = @"b";
-            string input = @"abc";
-            RegexOptions options = RegexOptions.Multiline;
-
-            foreach (Match m in Regex.Matches(input, pattern, options))
-            {
-                Console.WriteLine("'{0}' found at index {1}.", m.Value, m.Index);
-            }
-            */
+            
             //test text
-            /*
+            
             using (StreamReader sr = File.OpenText(textFile))
             {
                 string s = "";
+                Console.WriteLine("A(z) '{0}' allomany tartalma:",textFile);
                 while ((s = sr.ReadLine()) != null)
                 {
                     Console.WriteLine(s);
                 }
             }
-            */
+            
         }
         //------------------------------------------------
         //6
@@ -240,19 +225,19 @@ namespace zene
 
             }
             string newList = TimeConvert(newTime);
-            Console.WriteLine("New times of Radio1: {0}", newList);
+            Console.WriteLine("Adas vege: {0}", newList);
 
 
         }
 
         // helper methods
         private int TimePassed(List<Track> list)
-        {          
-                int trackTime = 0;
+        {                        
                 int listTime = 0;
                 foreach (Track t in list)
                 {
-                    trackTime = t.Min * 60 + t.Sec;
+                int trackTime = 0;
+                trackTime = t.Min * 60 + t.Sec;
                     listTime += trackTime;                    
                 }
                 return listTime;           
@@ -270,11 +255,12 @@ namespace zene
         private Track ListTime(List<Track> searchedList, int searchedTime)
         {
             Track tmp = null;
-            int trackTime = 0;
+            //int trackTime = 0;
             int listTime = 0;
 
             foreach (Track t in searchedList)
             {
+                int trackTime = 0;
                 trackTime = t.Min * 60 + t.Sec;
                 //Console.WriteLine(listTime + " > " + searchedTime);
                 listTime += trackTime;
