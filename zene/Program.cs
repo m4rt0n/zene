@@ -15,23 +15,27 @@ namespace zene
         static void Main(string[] args)
         {
             Repo repo = new Repo();
+
             //1.
             Console.WriteLine("1. feladat:");
             repo.ReadList("musor.txt");
+
             //2.
             Console.WriteLine("2. feladat:");
             repo.GroupByRadio();
+
             //3
             Console.WriteLine("3. feladat:");
             repo.ClaptonTime("Eric Clapton");
+
             //4
             Console.WriteLine("4. feladat:");
             repo.Omega("Omega:Legenda");
+
             //5
             Console.WriteLine("5. feladat:");
             Console.Write("Irja be a keresett szoveget: ");
-            string sms = Console.ReadLine();
-            
+            string sms = Console.ReadLine();           
             repo.SearchSms(sms);
             
             //6
@@ -40,10 +44,3 @@ namespace zene
         }
     }
 }
-
-/*
-Console.WriteLine("\n Tracks from list: \n" + "Radio - Min - Sec - Name \n");
-                repo.TrackList.ForEach(track => {
-                    Console.WriteLine(track.Rad + " - " + track.Min + " - " + track.Sec + " - " + track.Name);
-                });
-*/

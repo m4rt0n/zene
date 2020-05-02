@@ -66,15 +66,7 @@ namespace zene
             this._rad = rad;
             this._min = min;
             this._sec = sec;
-            this._name = name;
-
-
-
-            
+            this._name = name;           
         }
-
-
-
-
     }
 }
