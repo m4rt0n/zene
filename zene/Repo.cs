@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 
 namespace zene
 {
@@ -74,6 +75,7 @@ namespace zene
                 //time in sec
                 time += t.Min * 60 + t.Sec; 
             }
+            time += lastClapton.Min * 60 + lastClapton.Sec;
             //convert time sec
             Console.WriteLine("Time passed between first & last EC tracks:\n{0}",TimeConvert(time));                      
         }
@@ -109,21 +111,36 @@ namespace zene
             Console.WriteLine("Omega track start: {0}", omegaTimeString);
 
             //track during omega
+
             Track elementOne=ListTime(listRadioOne, omegaTime);
             Track elementTwo=ListTime(listRadioTwo, omegaTime);
-            Console.WriteLine(elementOne.Name);
+
+            if (elementOne != null)
+                {
+                Console.WriteLine("Radio 1 track during omega: {0}", elementOne.Name);
+                }
+            else
+                {
+                Console.WriteLine("Radio 1 : no match");
+                }
+
+            if (elementTwo != null)
+            {
+                Console.WriteLine("Radio 1 track during omega: {0}", elementTwo.Name);
+            }
+            else
+            {
+                Console.WriteLine("Radio 2 : no match");
+            }
+
+
+
 
             //Console.WriteLine("Tracks during omega: \br Radio1 : {0}\br Radio2: : {1}",
-               //elementOne.Name, elementTwo.Name );
-            
+            //elementOne.Name, elementTwo.Name );
+
         }
-
-        //--------------------------
-
-        
-
-        //--------------------
-
+        //----------------------------------------
         //5
         public void SearchSms()
         {
@@ -135,30 +152,59 @@ namespace zene
             //search in list
             List<Track> searchList = TrackList.FindAll(s => s.Name.ToLower().Contains(sms));
             //write to txt
-            string textFile = "keres.txt";
+            string textFile = "keres.txt";                    
 
-            //???---------------------           
-
+            
             if (!File.Exists(textFile))
             {
                 // Create a file to write to.
                 string createText = sms + Environment.NewLine;
                 File.WriteAllText(textFile, createText);                       
             }
-                                         
-                if (searchList.Count() != 0)
+            /*                           
+              if (searchList.Count() != 0)
+              {
+                  foreach (Track t in searchList)
+                  {
+                      string appendText = t.Name + Environment.NewLine;
+                      File.AppendAllText(textFile, appendText);
+                  }
+              }                
+              else
+              {
+                  Console.WriteLine("no match for: {0}", sms);
+              }
+              */
+
+            string minta = ".*";
+            for (int i = 0; i < sms.Length; i++)
+            {
+                minta = minta + Convert.ToString(sms[i]).ToLower() + ".*";
+            }
+            Regex mint = new Regex(minta);
+
+            
+            
+                foreach (Track t in TrackList)
                 {
-                    foreach (Track t in searchList)
+                    if (mint.IsMatch(t.Name.ToLower()))
                     {
                         string appendText = t.Name + Environment.NewLine;
                         File.AppendAllText(textFile, appendText);
                     }
-                }                
-                else
-                {
-                    Console.WriteLine("no match for: {0}", sms);
-                }                                                  
+                }
+            
 
+            /*
+            string pattern = @"b";
+            string input = @"abc";
+            RegexOptions options = RegexOptions.Multiline;
+
+            foreach (Match m in Regex.Matches(input, pattern, options))
+            {
+                Console.WriteLine("'{0}' found at index {1}.", m.Value, m.Index);
+            }
+            */
             //test text
             /*
             using (StreamReader sr = File.OpenText(textFile))
@@ -169,9 +215,9 @@ namespace zene
                     Console.WriteLine(s);
                 }
             }
-            */            
+            */
         }
-
+        //------------------------------------------------
         //6
         public void Change()
         {
@@ -230,14 +276,18 @@ namespace zene
             foreach (Track t in searchedList)
             {
                 trackTime = t.Min * 60 + t.Sec;
+                //Console.WriteLine(listTime + " > " + searchedTime);
                 listTime += trackTime;
+                //Console.WriteLine(listTime + " > " + searchedTime);
                 if (listTime > searchedTime)
                 {
                     tmp = t;
                     break;
                 }
+                //Console.WriteLine(listTime + " > " + searchedTime);
             }
             return tmp;
+            
         }
     }
 }
