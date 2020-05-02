@@ -107,59 +107,20 @@ namespace zene
             int omegaTime = (TimePassed(omegaListRange));
             string omegaTimeString = TimeConvert(omegaTime);
             Console.WriteLine("Omega track start: {0}", omegaTimeString);
+
             //track during omega
-            Track tmp;
-            int trackTime=0;
-            int listTime=0;
-            List<Track> tempList=new List<Track>();  
-            //radio 1
-            foreach(Track t in listRadioOne)
-            {
-                trackTime = t.Min * 60 + t.Sec;
-                listTime += trackTime;
-                if(listTime>omegaTime)
-                {
-                    tmp = t;
-                    tempList.Add(tmp);         
-                }
-            }
-            //radio 2
-            foreach (Track t in listRadioTwo)
-            {
-                trackTime = t.Min * 60 + t.Sec;
-                listTime += trackTime;
-                if (listTime > omegaTime)
-                {
-                    tmp = t;
-                    tempList.Add(tmp);
-                }
-            }
-            Console.WriteLine
-                       ("Radio 1 track: {0}\nRadio 2 track: {1} ",
-                       (tempList.FindLast(x => x.Rad == 1).Name),
-                       (tempList.FindLast(x => x.Rad == 2).Name));
+            Track elementOne=ListTime(listRadioOne, omegaTime);
+            Track elementTwo=ListTime(listRadioTwo, omegaTime);
+            Console.WriteLine(elementOne.Name);
+
+            //Console.WriteLine("Tracks during omega: \br Radio1 : {0}\br Radio2: : {1}",
+               //elementOne.Name, elementTwo.Name );
+            
         }
 
         //--------------------------
 
-        public Track ListTime(List<Track> list, int omegaTime)
-        {
-            Track tmp=null;
-            int trackTime = 0;
-            int listTime = 0;
-            
-            foreach (Track t in list)
-            {
-                trackTime = t.Min * 60 + t.Sec;
-                listTime += trackTime;
-                if (listTime > omegaTime)
-                {
-                    tmp = t;
-                    break;
-                }
-            }
-            return tmp;
-        }
+        
 
         //--------------------
 
@@ -258,7 +219,26 @@ namespace zene
             string str = time.ToString(@"hh\:mm\:ss");
             return str;
             //Console.WriteLine("converted time : {1}", str);                       
-        }            
+        }
+
+        private Track ListTime(List<Track> searchedList, int searchedTime)
+        {
+            Track tmp = null;
+            int trackTime = 0;
+            int listTime = 0;
+
+            foreach (Track t in searchedList)
+            {
+                trackTime = t.Min * 60 + t.Sec;
+                listTime += trackTime;
+                if (listTime > searchedTime)
+                {
+                    tmp = t;
+                    break;
+                }
+            }
+            return tmp;
+        }
     }
 }
 
