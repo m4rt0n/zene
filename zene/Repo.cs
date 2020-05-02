@@ -22,7 +22,6 @@ namespace zene
             {
                 foreach (string line in lines)
                 {
-
                     string[] trackData = new string[4];
                     char[] sep = { ' ' };
                     trackData = line.Split(sep, 4);
@@ -44,7 +43,7 @@ namespace zene
         //2.
         public void GroupByRadio()
         {
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i <=3; i++)
             { 
             Console.WriteLine("{0}. Ado : {1} szam", i,
                 TrackList.Where(x => x.Rad == i).Count());
