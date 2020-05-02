@@ -20,9 +20,9 @@ namespace zene
             //2.
             repo.GroupByRadio();
             //3
-            repo.ClaptonTime();
+            repo.ClaptonTime("Eric Clapton");
             //4
-            repo.Omega();
+            repo.Omega("Omega:Legenda");
             //5
             repo.SearchSms();
             //6

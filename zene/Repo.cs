@@ -52,9 +52,9 @@ namespace zene
         }
 
         //3
-        public void ClaptonTime()
+        public void ClaptonTime(string ec)
         {
-            string ec = "Eric Clapton";
+            //string ec = "Eric Clapton";
             //radio 1
             List<Track> listRadioOne = TrackList.FindAll(x => x.Rad == 1);
            //first and last EC
@@ -79,10 +79,10 @@ namespace zene
         }
                
         //4
-        public void Omega()
+        public void Omega(string omegaName)
         {
             //omega name
-            string omegaName = "Omega:Legenda";       
+            //string omegaName = "Omega:Legenda";       
             //find omega object
             var omegaObj = TrackList.Find(o => o.Name == omegaName);
             //find radio of omega 
@@ -139,6 +139,29 @@ namespace zene
                        (tempList.FindLast(x => x.Rad == 1).Name),
                        (tempList.FindLast(x => x.Rad == 2).Name));
         }
+
+        //--------------------------
+
+        public Track ListTime(List<Track> list, int omegaTime)
+        {
+            Track tmp=null;
+            int trackTime = 0;
+            int listTime = 0;
+            
+            foreach (Track t in list)
+            {
+                trackTime = t.Min * 60 + t.Sec;
+                listTime += trackTime;
+                if (listTime > omegaTime)
+                {
+                    tmp = t;
+                    break;
+                }
+            }
+            return tmp;
+        }
+
+        //--------------------
 
         //5
         public void SearchSms()
@@ -216,7 +239,7 @@ namespace zene
         }
 
         // helper methods
-        public int TimePassed(List<Track> list)
+        private int TimePassed(List<Track> list)
         {          
                 int trackTime = 0;
                 int listTime = 0;
@@ -228,7 +251,7 @@ namespace zene
                 return listTime;           
         }
 
-        public string TimeConvert(int seconds)
+        private string TimeConvert(int seconds)
         {
             //var second = t.Min * 60 + t.Sec;
             TimeSpan time = TimeSpan.FromSeconds(seconds);
